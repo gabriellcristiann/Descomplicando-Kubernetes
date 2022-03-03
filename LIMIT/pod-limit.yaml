@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: limit-pod
+  labels:
+    name: myapp
+  namespace: default 
+spec:
+  containers:
+  - name: meu-app
+    image: nginx
+    # resources:
+    #   limits:
+    #     memory: "128Mi"
+    #     cpu: "500m"
+    ports:
+      - containerPort: 80

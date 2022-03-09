@@ -1,0 +1,47 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: giropops
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: giropops
+  template:
+    metadata:
+      labels:
+        app: giropops
+    spec:
+      containers:
+      # - image: linuxtips/nginx-prometheus-exporter:1.0.0
+      - image: nginx
+        name: giropops
+        ports:
+        - containerPort: 80
+        resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: giropops
+  labels:
+    app: giropops
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: giropops
+  sessionAffinity: None
+  type: ClusterIP
+
+---  

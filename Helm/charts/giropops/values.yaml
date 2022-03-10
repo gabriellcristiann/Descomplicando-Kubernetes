@@ -3,12 +3,13 @@
 # Declare variables to be passed into your templates.
 name: giropops
 replicaCount: 1
+namespace: default
 
 image:
-  repository: nginx
+  repository: megaconecta/frontendcentral
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.19.9"
+  tag: "v136"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -49,7 +50,7 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: cristian-live.eastus.cloudapp.azure.com
+    - host: gabs.cloudcall.tec.br
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -59,7 +60,7 @@ ingress:
   tls: 
   - secretName: giropops-tls
     hosts:
-    - cristian-live.eastus.cloudapp.azure.com
+    - gabs.cloudcall.tec.br
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious

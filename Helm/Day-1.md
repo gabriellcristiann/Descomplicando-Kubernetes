@@ -7,7 +7,7 @@
 
 ## O que é o Helm
 
-O Helm é um gerenciador de pacotes criado para facilitar a instalação de aplicações e suas dependências no Kubernetes. 
+O Helm é um gerenciador de pacotes criado para facilitar a instalação de aplicações e suas dependências no Kubernetes.
 Podemos comparar o Helm com o APT do Debian, pois com apenas um comando você consegue instalar aplicações e suas dependencias no Kubernetes e ainda, fazer o gerenciamento de suas versões, podendo fazer o upgrade ou downgrade sem maiores problemas e rapidamente.
 O Helm não é somente utilizado para fazer a instalação de aplicativos de terceiros, você consegue criar `charts`, que são os pacotes que o Helm utiliza para a instalação e configuração do aplicativo no Kubernetes.
 O chart é composto por arquivos que definem como e qual deve ser o comportamento da aplicação dentro do cluster. É no chart que você define o seu deployment, o service, ingress e qualquer outra coisa necessária para a instalação e configuração da app desejada, e para isso, utilizamos os templates, que serão abordados mais para frente.
@@ -21,6 +21,7 @@ Hoje o Helm é suportado por diversos sistemas operacionais, como Linux, MacOS, 
 Para realizar a instalação do nosso Helm, faça:
 
 ### Linux
+
 ```bash
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 sudo apt-get install apt-transport-https --yes
@@ -30,15 +31,16 @@ sudo apt-get install helm
 ```
 
 ### Windows
+
 ```bash
 ```
 
 ### MacOS
+
 ```bash
 ```
 
 ### Primeiros passos com o Helm
-
 
 Vamos verificar a versão do Helm que instalamos:
 
@@ -69,19 +71,27 @@ Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "stable" chart repository
 Update Complete. ⎈Happy Helming!⎈
 ```
+
 Para pesquisar os charts disponíveis em seu repositório `stable`:
+
 ```bash
 helm search repo stable
 ```
-Para procurar por determinado chart no https://artifacthub.io/
+
+Para procurar por determinado chart no `https://artifacthub.io/`
+
 ```bash
 helm search hub nginx
 ```
+
 Visualizar os detalhes de determinado chart:
+
 ```bash
 helm show chart stable/mysql
 ```
+
 Deploy do nosso primeiro chart:
+
 ```bash
 helm install stable/mysql --generate-name
 WARNING: This chart is deprecated
@@ -109,33 +119,47 @@ To connect to your database directly from outside the K8s cluster:
     kubectl port-forward svc/mysql-1617481683 3306
     mysql -h ${MYSQL_HOST} -P${MYSQL_PORT} -u root -p${MYSQL_ROOT_PASSWORD}
 ```
+
 Removendo o chart instalando anteriormente:
+
 ```bash
 helm uninstall mysql-1617481683
 ```
+
 Instalando um novo exemplo de chart:
+
 ```bash
 helm install stable/minecraft --generate-name
 ```
+
 Listando os charts instalados:
+
 ```bash
 helm ls
 NAME                	NAMESPACE	REVISION	UPDATED                                 	STATUS  	CHART          	APP VERSION
 minecraft-1617482357	default  	2       	2021-04-03 22:39:47.146903918 +0200 CEST	deployed	minecraft-1.2.5	1.14.4     
 ```
+
 Removendo o chart:
+
 ```bash
 helm uninstall minecraft-1617482357
-``` 
+```
+
 Criando a nossa estrutura de arquivos e diretórios para o nosso chart:
+
 ```bash
 helm create giropops
 ```
+
 Instalando o comando tree para melhor visualização da estrutura de arquivos:
+
 ```bash
 sudo apt-get install tree -y
 ```
+
 Estrutura do chart:
+
 ```
 └── giropops
     ├── charts
@@ -152,23 +176,33 @@ Estrutura do chart:
     │       └── test-connection.yaml
     └── values.yaml
 ```
+
 Realizando o deploy do nosso primeiro chart:
+
 ```bash
 helm install giropops giropops/ --values giropops/values.yaml 
 ```
+
 Listando os charts:
+
 ```bash
 helm list
 ```
+
 Realizando o upgrade do nosso chart:
+
 ```bash
 helm upgrade giropops giropops/ --values giropops/values.yaml
 ```
+
 Realizando o rollback para a `revision 1`:
+
 ```bash
 helm rollback giropops 1
 ```
+
 Visualizando o histórico de ações de determinado chart deployado:
+
 ```bash
 helm history giropops
 ```
